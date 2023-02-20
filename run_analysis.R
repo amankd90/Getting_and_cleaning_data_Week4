@@ -1,17 +1,17 @@
-
 library(dplyr)
 library(plyr)
+library(data.table)
 
 #1. Merges the training and the test sets to create one data set.
 
-#Getting the files
+#Getting all the files
 fileurl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 download.file(fileurl, destfile = "/Users/amani/Documents/Coursera-DS/Weekfour.zip")
 
-#Unzipping the files
+#Unzipping all the files
 unzip(zipfile = "/Users/amani/Documents/Coursera-DS/Weekfour.zip", exdir = "/Users/amani/Documents/Coursera-DS/Weekfour")
 
-#reading the required test and train files
+#Reading the required test and train files
 x_train <- read.table("/Users/amani/Documents/Coursera-DS/Weekfour/UCI HAR Dataset/train/X_train.txt")
 y_train <- read.table("/Users/amani/Documents/Coursera-DS/Weekfour/UCI HAR Dataset/train/y_train.txt")
 subject_train <- read.table("/Users/amani/Documents/Coursera-DS/Weekfour/UCI HAR Dataset/train/subject_train.txt")
@@ -24,7 +24,7 @@ subject_test <- read.table("/Users/amani/Documents/Coursera-DS/Weekfour/UCI HAR 
 activity_labels <- read.table("/Users/amani/Documents/Coursera-DS/Weekfour/UCI HAR Dataset/activity_labels.txt")
 features <- read.table("/Users/amani/Documents/Coursera-DS/Weekfour/UCI HAR Dataset/features.txt")
 
-#Naming the columns appropriately
+#Naming the columns of each file appropriately
 colnames(x_train) <- features[,2]
 colnames(y_train) <- "activityID"
 colnames(subject_train) <- "subjectID"
@@ -35,18 +35,22 @@ colnames(subject_test) <- "subjectID"
 
 colnames(activity_labels) <- c("activityID", "activityType")
 
-#Merging test datasets and train datasets separately
-alltrain <- cbind(y_train, subject_train, x_train)
+#Merging test datasets
 alltest <- cbind(y_test, subject_test, x_test)
-
-#Merging of all test and train datasets
+#Merging test datasets
+alltrain <- cbind(y_train, subject_train, x_train)
+#Merging all test and train datasets to create final dataset
 finaldataset <- rbind(alltrain, alltest)
 
 
 #2 Extracts only the measurements on the mean and standard deviation for each measurement. 
+#Reading variable names  
 colNames <- colnames(finaldataset)
 
+#Vector for mean and std
 mean_and_std <- (grep("activityID", colNames) | grep("subjectID", colNames) | grepl("mean..", colNames) | grepl("std...", colNames))
+
+#Subset from merged dataset
 setforMeanandStd <- finaldataset[ , mean_and_std == TRUE]
 
 
@@ -65,18 +69,16 @@ colnames(setWithActivityNames)<-gsub("BodyBody", "Body", colnames(setWithActivit
 
 #5 From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
-# create a dataframe
-df <- data.frame(setWithActivityNames)
+#Making second tidy data set
 
 #Getting the mean of all variables by subject and activity
 final_mean <- df %>% 
   group_by(subjectID,activityType, activityID) %>% 
   summarize_all(mean)
+#Ordering the data by subject ID and activity ID
+tidy_data <- final_mean[order(final_mean$subjectID, final_mean$activityID), ]
 
-
-
-# 5.2 Writing second tidy data set into a txt file
-write.table(final_mean, "/Users/amani/Documents/Coursera-DS/tidy_data.txt", row.names = FALSE)
-
+#Writing second tidy data set into a txt file
+write.table(tidy, file="tidy_data.txt", row.names = FALSE, col.names = TRUE)
 
 
