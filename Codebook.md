@@ -43,7 +43,7 @@ The code assumes all the data is present in the same folder, un-compressed and w
 
 ## About variables and data:   
 * `x_train`, `y_train`, `x_test`, `y_test`, `subject_train` and `subject_test` contain the data from the downloaded files.
-* `activity_labels` contains all the labels of six activities such as walking, sitting etc.\
+* `activity_labels` contains all the labels of six activities such as walking, sitting etc.
 * `features` contains the correct names for the `x_test` and `x_train` datasets. 
 * `all_test` contains merged test data files;  `all_train` contains merged train data files
 * `finaldataset` contains all test and train data files
