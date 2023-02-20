@@ -51,4 +51,4 @@ The code assumes all the data is present in the same folder, un-compressed and w
 * `setWithActivityNames` contains the dataset where descriptive activity names have been added using `activity_labels` file.
 * `final_mean` contains mean of all the variables grouped by subject ID and activity ID.
 * `tidy_data` contains the final data set which is ordered by subject ID and activity ID for ease of reading.
-* `tidy_data.txt'`is the .txt file where the final `tidy_data` is written. 
+* `tidy_data.txt`is the .txt file where the final `tidy_data` is written. 
