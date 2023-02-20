@@ -1,6 +1,6 @@
-#This is the code book for the project
+# This is the code book for the project
 
-##How to get to the tidy_data.txt:
+## How to get to the tidy_data.txt:
 1. Download data from the link below and unzip it into working directory of R Studio.
 2. Execute the R script.
 
