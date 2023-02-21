@@ -52,3 +52,7 @@ The code assumes all the data is present in the same folder, un-compressed and w
 * `final_mean` contains mean of all the variables grouped by subject ID and activity ID.
 * `tidy_data` contains the final data set which is ordered by subject ID and activity ID for ease of reading.
 * `tidy_data.txt`is the .txt file where the final `tidy_data` is written. 
+
+
+Reference: I used some codes from this resource online when I found myself stuck. I made sure I understand how the code works and then use it in my project.
+https://github.com/wdluft/getting-and-cleaning-data-week-4-project
